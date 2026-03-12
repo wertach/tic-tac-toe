@@ -12,6 +12,18 @@
       <h1>Tic Tac Toe</h1>
     </header>
 
+    <div class="mode-selector">
+      <div class="mode-btns">
+        <button class="btn-mode active" id="btn-pvp">👥 2 Players</button>
+        <button class="btn-mode" id="btn-ai">🤖 vs AI</button>
+      </div>
+      <div class="difficulty-selector" id="difficulty-selector" hidden>
+        <button class="btn-difficulty active" data-level="easy">Easy</button>
+        <button class="btn-difficulty" data-level="medium">Medium</button>
+        <button class="btn-difficulty" data-level="hard">Hard</button>
+      </div>
+    </div>
+
     <div class="status-bar" id="status">
       Player <span id="current-player" class="player-x">X</span>'s turn
     </div>

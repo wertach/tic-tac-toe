@@ -3,6 +3,12 @@
   --color-bg: #f0f4f8;
   --color-surface: #ffffff;
   --color-border: #cbd5e1;
+  --color-easy: #16a34a;       /* green for easy difficulty */
+  --color-easy-bg: #dcfce7;
+  --color-medium: #d97706;     /* amber for medium */
+  --color-medium-bg: #fef3c7;
+  --color-hard: #dc2626;       /* red for hard */
+  --color-hard-bg: #fee2e2;
   --color-x: #e05c5c;       /* coral-red for X */
   --color-o: #2ea8a8;       /* teal for O */
   --color-text: #1e293b;
@@ -165,10 +171,106 @@ header h1 {
   transform: translateY(0);
 }
 
+/* ─── Mode Selector ─────────────────────────────────────────────────────── */
+.mode-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.mode-btns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-mode {
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  border: 2px solid var(--color-border);
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-mode:hover {
+  border-color: var(--color-btn);
+  color: var(--color-text);
+}
+
+.btn-mode.active {
+  background: var(--color-btn);
+  color: #fff;
+  border-color: var(--color-btn);
+}
+
+/* ─── Difficulty Selector ───────────────────────────────────────────────── */
+.difficulty-selector {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+/* Override browser default [hidden] to make our transitions work */
+.difficulty-selector[hidden] {
+  display: none;
+}
+
+.btn-difficulty {
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  border: 2px solid var(--color-border);
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-difficulty:hover {
+  color: var(--color-text);
+  border-color: currentColor;
+}
+
+.btn-difficulty.active[data-level="easy"] {
+  background: var(--color-easy-bg);
+  color: var(--color-easy);
+  border-color: var(--color-easy);
+}
+
+.btn-difficulty.active[data-level="medium"] {
+  background: var(--color-medium-bg);
+  color: var(--color-medium);
+  border-color: var(--color-medium);
+}
+
+.btn-difficulty.active[data-level="hard"] {
+  background: var(--color-hard-bg);
+  color: var(--color-hard);
+  border-color: var(--color-hard);
+}
+
 /* ─── Responsive tweaks for very small screens ──────────────────────────── */
 @media (max-width: 360px) {
   :root {
     --cell-size: 90px;
     --gap: 8px;
+  }
+
+  .btn-mode {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .btn-difficulty {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.6rem;
   }
 }
