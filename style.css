@@ -1,0 +1,174 @@
+/* ─── CSS Custom Properties ─────────────────────────────────────────────── */
+:root {
+  --color-bg: #f0f4f8;
+  --color-surface: #ffffff;
+  --color-border: #cbd5e1;
+  --color-x: #e05c5c;       /* coral-red for X */
+  --color-o: #2ea8a8;       /* teal for O */
+  --color-text: #1e293b;
+  --color-muted: #64748b;
+  --color-highlight: #fef08a; /* yellow highlight for winning cells */
+  --color-btn: #1e293b;
+  --color-btn-hover: #334155;
+  --radius: 12px;
+  --cell-size: min(28vw, 120px);
+  --gap: 10px;
+  --transition: 0.15s ease;
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* ─── Layout Container ──────────────────────────────────────────────────── */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ─── Header ────────────────────────────────────────────────────────────── */
+header h1 {
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-align: center;
+}
+
+/* ─── Status Bar ────────────────────────────────────────────────────────── */
+.status-bar {
+  font-size: clamp(1rem, 3.5vw, 1.2rem);
+  font-weight: 600;
+  color: var(--color-muted);
+  text-align: center;
+  min-height: 2em;
+  transition: color var(--transition);
+}
+
+.status-bar.winner {
+  color: var(--color-text);
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+}
+
+.status-bar.draw {
+  color: var(--color-muted);
+}
+
+/* Player letter colours in status */
+.player-x { color: var(--color-x); }
+.player-o { color: var(--color-o); }
+
+/* ─── Board Grid ────────────────────────────────────────────────────────── */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, var(--cell-size));
+  grid-template-rows: repeat(3, var(--cell-size));
+  gap: var(--gap);
+  background: var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--gap);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* ─── Cells ─────────────────────────────────────────────────────────────── */
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background: var(--color-surface);
+  border: none;
+  border-radius: calc(var(--radius) - 4px);
+  cursor: pointer;
+  font-size: calc(var(--cell-size) * 0.45);
+  font-weight: 800;
+  line-height: 1;
+  transition:
+    background var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent; /* text set via data-mark */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cell[data-mark="X"] { color: var(--color-x); }
+.cell[data-mark="O"] { color: var(--color-o); }
+
+/* Hover / active only on empty cells */
+.cell:not([data-mark]):hover {
+  background: #f1f5f9;
+  transform: scale(1.04);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cell:not([data-mark]):active {
+  transform: scale(0.97);
+}
+
+/* Filled cells — no pointer interaction */
+.cell[data-mark] {
+  cursor: default;
+}
+
+/* Winning cell highlight */
+.cell.winner {
+  background: var(--color-highlight);
+  animation: pulse 0.4s ease;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* ─── New Game Button ───────────────────────────────────────────────────── */
+.btn-new-game {
+  background: var(--color-btn);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background var(--transition), transform var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-new-game:hover {
+  background: var(--color-btn-hover);
+  transform: translateY(-1px);
+}
+
+.btn-new-game:active {
+  transform: translateY(0);
+}
+
+/* ─── Responsive tweaks for very small screens ──────────────────────────── */
+@media (max-width: 360px) {
+  :root {
+    --cell-size: 90px;
+    --gap: 8px;
+  }
+}
